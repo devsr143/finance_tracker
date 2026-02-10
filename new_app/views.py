@@ -43,7 +43,7 @@ def logout_view(request):
     return redirect('login')
 
 
-@login_required
+@login_required(login_url='login')
 def transaction_create(request):
     if request.method == 'POST':
         form = TransactionForm(request.POST)
@@ -58,13 +58,13 @@ def transaction_create(request):
     return render(request, 'update.html', {'form': form})
 
 
-@login_required
+@login_required(login_url='login')
 def dashboard(request):
     transactions = Transaction.objects.filter(user=request.user)
     return render(request, 'dashboard.html', {'transactions': transactions})
 
 
-@login_required
+@login_required(login_url='login')
 def transaction_update(request, id):
     transaction = Transaction.objects.get(
         id=id,
@@ -84,7 +84,7 @@ def transaction_update(request, id):
 
 
 
-@login_required
+@login_required(login_url='login')
 def transaction_delete(request, id):
     transaction = Transaction.objects.get(
         id=id,

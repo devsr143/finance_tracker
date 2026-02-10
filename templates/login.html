@@ -32,39 +32,58 @@
   <div class="container-fluid h-custom">
     <div class="row d-flex justify-content-center align-items-center h-100">
 
-      <!-- Image column -->
       <div class="col-md-9 col-lg-6 col-xl-5">
         <img src="https://img.freepik.com/free-vector/login-concept-illustration_114360-739.jpg"
              class="img-fluid" alt="Login illustration">
       </div>
 
-      <!-- Login form column -->
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
         <form method="post">
           {% csrf_token %}
 
           <h3 class="mb-4 text-center">Login</h3>
 
-          <!-- Username field -->
-          <div class="form-outline mb-4">
-            <input type="text" class="form-control form-control-lg" name="username" />
-            <label class="form-label">Email</label>
-          </div>
+         <!-- Non-field errors (e.g., invalid login) -->
+            {% if form.non_field_errors %}
+              <div class="alert alert-danger">
+                {{ form.non_field_errors }}
+              </div>
+            {% endif %}
 
-          <!-- Password field -->
-          <div class="form-outline mb-4">
-            <input type="password" class="form-control form-control-lg" name="password" />
-            <label class="form-label">Password</label>
-          </div>
+            <!-- Username -->
+            <div class="form-outline mb-4">
+              <input type="text"
+                     class="form-control form-control-lg"
+                     name="username"
+                     value="{{ form.username.value|default:'' }}" />
+              <label class="form-label">Username</label>
+              {% if form.username.errors %}
+                <div class="text-danger small">
+                  {{ form.username.errors }}
+                </div>
+              {% endif %}
+            </div>
 
-          <!-- Login button -->
-          <div class="text-center text-lg-start mt-4 pt-2">
-            <button type="submit"
-                    class="btn btn-primary btn-lg"
-                    style="padding-left: 2.5rem; padding-right: 2.5rem;">
-              Login
-            </button>
-          </div>
+            <!-- Password -->
+            <div class="form-outline mb-4">
+              <input type="password"
+                     class="form-control form-control-lg"
+                     name="password" />
+              <label class="form-label">Password</label>
+              {% if form.password.errors %}
+                <div class="text-danger small">
+                  {{ form.password.errors }}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="text-center text-lg-start mt-4 pt-2">
+              <button type="submit"
+                      class="btn btn-primary btn-lg"
+                      style="padding-left: 2.5rem; padding-right: 2.5rem;">
+                Login
+              </button>
+            </div>
         </form>
 
         <!-- Register link -->
