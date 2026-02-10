@@ -1,12 +1,57 @@
-<h2>My Transactions</h2>
-<a href="{% url 'transaction_create' %}">Add Transaction</a>
 
-<ul>
-  {% for t in transactions %}
-    <li>
-      {{ t.title }} - ₹{{ t.amount }} - {{ t.category }} - {{ t.date }}
-      <a href="{% url 'transaction_update' t.id %}">Edit</a>
-      <a href="{% url 'transaction_delete' t.id %}">Delete</a>
-    </li>
-  {% endfor %}
-</ul>
+<!doctype html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Transactions</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<section class="vh-100">
+  <div class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+
+      <!-- Image column -->
+      <div class="col-md-9 col-lg-6 col-xl-5">
+        <img src="https://img.freepik.com/free-vector/mobile-banking-concept-illustration_114360-796.jpg"
+             class="img-fluid" alt="Money transaction illustration">
+      </div>
+
+      <!-- Transactions column -->
+      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+        <h2 class="text-center mb-4">My Transactions</h2>
+
+        <div class="text-end mb-3">
+          <a href="{% url 'transaction_create' %}" class="btn btn-success">Add Transaction</a>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <ul class="list-group">
+              {% for t in transactions %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>{{ t.title }}</strong><br>
+                    ₹{{ t.amount }} - {{ t.category }} - {{ t.date }}
+                  </div>
+                  <div>
+                    <a href="{% url 'transaction_update' t.id %}" class="btn btn-sm btn-primary me-2">Edit</a>
+                    <a href="{% url 'transaction_delete' t.id %}" class="btn btn-sm btn-danger">Delete</a>
+                  </div>
+                </li>
+              {% empty %}
+                <li class="list-group-item text-center">No transactions found.</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
