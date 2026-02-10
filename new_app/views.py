@@ -1,9 +1,11 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Transaction
 from .forms import TransactionForm
-
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import logout
 
 
 def register(request):
@@ -15,6 +17,30 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, "register.html", {"form": form})
+
+
+
+def login_view(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('dashboard')
+    else:
+        form = AuthenticationForm()
+
+    return render(request, "login.html", {"form": form})
+
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')
 
 
 @login_required
@@ -29,11 +55,11 @@ def transaction_create(request):
     else:
         form = TransactionForm()
 
-    return render(request, 'create.html', {'form': form})
+    return render(request, 'update.html', {'form': form})
 
 
-
-@login_required
+@login_required(login_url='login')
+# @login_required
 def dashboard(request):
     transactions = Transaction.objects.filter(user=request.user)
     return render(request, 'dashboard.html', {'transactions': transactions})

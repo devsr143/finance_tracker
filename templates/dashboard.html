@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 {% load static %}
@@ -9,6 +8,16 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+
+<!-- Navbar with Logout -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <div class="d-flex ms-auto">
+      <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+    </div>
+  </div>
+</nav>
+
 <section class="vh-100">
   <div class="container-fluid h-custom">
     <div class="row d-flex justify-content-center align-items-center h-100">
@@ -52,6 +61,7 @@
     </div>
   </div>
 </section>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
