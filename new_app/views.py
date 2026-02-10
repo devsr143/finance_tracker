@@ -58,8 +58,7 @@ def transaction_create(request):
     return render(request, 'update.html', {'form': form})
 
 
-@login_required(login_url='login')
-# @login_required
+@login_required
 def dashboard(request):
     transactions = Transaction.objects.filter(user=request.user)
     return render(request, 'dashboard.html', {'transactions': transactions})
